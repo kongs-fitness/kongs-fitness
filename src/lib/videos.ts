@@ -35,21 +35,17 @@ export function parseYoutubeId(input: string): string | null {
   return null;
 }
 
-function readVideoEnv(name: string): string | null {
+const DEFAULT_VIDEO_ID = "h-bsynFzWjA";
+
+function readVideoEnv(name: string): string {
   const raw = process.env[name]?.trim();
-  return raw ? parseYoutubeId(raw) : null;
+  return (raw ? parseYoutubeId(raw) : null) ?? DEFAULT_VIDEO_ID;
 }
 
 export function getVideos(): VideosConfig {
-  const home = readVideoEnv("YOUTUBE_HOME");
-  const register = readVideoEnv("YOUTUBE_REGISTER");
-  const unlock = readVideoEnv("YOUTUBE_UNLOCK");
-
-  if (!home || !register || !unlock) {
-    throw new Error(
-      "請在 .env.local 設定 YOUTUBE_HOME、YOUTUBE_REGISTER 和 YOUTUBE_UNLOCK（可貼上完整 YouTube 連結或影片 ID）",
-    );
-  }
-
-  return { home, register, unlock };
+  return {
+    home: readVideoEnv("YOUTUBE_HOME"),
+    register: readVideoEnv("YOUTUBE_REGISTER"),
+    unlock: readVideoEnv("YOUTUBE_UNLOCK"),
+  };
 }

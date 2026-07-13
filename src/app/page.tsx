@@ -211,7 +211,7 @@ export default function Home() {
                     從建立正確基礎開始！
                   </p>
                 </div>
-                <YouTubeEmbed videoId={registerYoutubeId} />
+                <YouTubeEmbed videoId={registerYoutubeId} variant="vertical" />
               </div>
             </div>
           </Container>

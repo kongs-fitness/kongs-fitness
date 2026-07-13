@@ -77,9 +77,21 @@ export function FaqAccordion({
   );
 }
 
-export function YouTubeEmbed({ videoId }: { videoId: string }) {
+export function YouTubeEmbed({
+  videoId,
+  variant = "horizontal",
+}: {
+  videoId: string;
+  variant?: "horizontal" | "vertical";
+}) {
+  const isVertical = variant === "vertical";
+
   return (
-    <div className="relative aspect-video overflow-hidden rounded-2xl bg-black shadow-2xl">
+    <div
+      className={`relative overflow-hidden rounded-2xl bg-black shadow-2xl ${
+        isVertical ? "mx-auto aspect-[9/16] w-full max-w-sm" : "aspect-video"
+      }`}
+    >
       <iframe
         src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
         title="Kong's Fitness 免費教學影片"
