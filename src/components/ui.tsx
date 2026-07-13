@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback } from "react";
+import { images } from "@/data/content";
 
 type CtaButtonProps = {
   href?: string;
@@ -100,5 +102,28 @@ export function Section({
     <section id={id} className={`py-14 md:py-20 ${className}`}>
       {children}
     </section>
+  );
+}
+
+export function SiteLogo({ priority = false }: { priority?: boolean }) {
+  return (
+    <>
+      <Image
+        src={images.logoSquare}
+        alt="Kong's Fitness"
+        width={48}
+        height={48}
+        className="h-10 w-10 rounded-full md:hidden"
+        priority={priority}
+      />
+      <Image
+        src={images.logo}
+        alt="Kong's Fitness"
+        width={200}
+        height={36}
+        className="hidden h-9 w-auto md:block"
+        priority={priority}
+      />
+    </>
   );
 }

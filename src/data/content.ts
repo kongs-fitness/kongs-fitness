@@ -1,5 +1,6 @@
 export const images = {
   logo: "/images/logo.png",
+  logoSquare: "/images/logo.jpeg",
   heroBg: "/images/hero-bg.png",
   problem1: "/images/problem-1.png",
   problem2: "/images/problem-2.png",
@@ -50,7 +51,7 @@ export const coaches = [
       "擁有超過 25 年健身教學經驗，專注於體態管理與系統化訓練。至今已協助超過 600 位學員完成減脂、增肌與體能提升，多數人在首月內已明顯改善體能與體脂。",
       "我所建立的，是一套經過長期驗證、可穩定複製的訓練系統，讓體態改變不再依賴運氣，而是有跡可循的結果。",
     ],
-    images: [images.croco1, images.croco2, images.croco3],
+    images: [images.croco1, images.croco2],
   },
   {
     name: "Leo Lee",

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { UnlockVideoPageClient } from "@/components/unlock-video-page";
-import { Container } from "@/components/ui";
-import { images } from "@/data/content";
+import { Container, SiteLogo } from "@/components/ui";
 import { unlockVideoContent } from "@/data/unlock-video-content";
 import { getVideos } from "@/lib/videos";
 
@@ -23,14 +21,7 @@ export default function UnlockVideoPage() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-white/95 backdrop-blur-md">
         <Container className="flex items-center justify-between py-4">
           <Link href="/">
-            <Image
-              src={images.logo}
-              alt="Kong's Fitness"
-              width={200}
-              height={36}
-              className="h-9 w-auto"
-              priority
-            />
+            <SiteLogo priority />
           </Link>
           <Link
             href="/"

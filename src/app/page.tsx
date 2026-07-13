@@ -9,7 +9,7 @@ import {
   testimonials,
 } from "@/data/content";
 import { FaqAccordion, RegisterForm, YouTubeEmbed } from "@/components/client";
-import { Container, CtaButton, Section, SectionHeading } from "@/components/ui";
+import { Container, CtaButton, Section, SectionHeading, SiteLogo } from "@/components/ui";
 import { getVideos } from "@/lib/videos";
 
 export const dynamic = "force-dynamic";
@@ -20,14 +20,7 @@ export default function Home() {
     <>
       <header className="sticky top-0 z-50 border-b border-white/10 bg-white/95 backdrop-blur-md">
         <Container className="flex items-center justify-between py-4">
-          <Image
-            src={images.logo}
-            alt="Kong's Fitness"
-            width={200}
-            height={36}
-            className="h-9 w-auto"
-            priority
-          />
+          <SiteLogo priority />
           <CtaButton href="#register" className="!px-5 !py-2.5 !text-base">
             立即解鎖免費影片
           </CtaButton>
