@@ -24,18 +24,23 @@ export default function AdminPage() {
 
           <div className="mt-8 space-y-4">
             <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5">
-              <p className="text-sm font-medium text-neutral-500">首頁影片 ID</p>
+              <p className="text-sm font-medium text-neutral-500">首頁 Hero 影片</p>
               <p className="mt-1 font-mono text-lg text-neutral-900">{videos.home}</p>
             </div>
             <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5">
-              <p className="text-sm font-medium text-neutral-500">解鎖頁影片 ID</p>
+              <p className="text-sm font-medium text-neutral-500">首頁報名區影片</p>
+              <p className="mt-1 font-mono text-lg text-neutral-900">{videos.register}</p>
+            </div>
+            <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5">
+              <p className="text-sm font-medium text-neutral-500">解鎖頁影片</p>
               <p className="mt-1 font-mono text-lg text-neutral-900">{videos.unlock}</p>
             </div>
           </div>
 
           <div className="mt-8 rounded-2xl bg-neutral-50 p-5 text-sm leading-relaxed text-neutral-600">
             <p className="font-semibold text-neutral-800">.env.local 範例</p>
-            <pre className="mt-3 overflow-x-auto rounded-xl bg-white p-4 text-xs text-neutral-800">{`YOUTUBE_HOME=https://www.youtube.com/watch?v=YOUR_HOME_VIDEO
+            <pre className="mt-3 overflow-x-auto rounded-xl bg-white p-4 text-xs text-neutral-800">{`YOUTUBE_HOME=https://www.youtube.com/watch?v=YOUR_HERO_VIDEO
+YOUTUBE_REGISTER=https://www.youtube.com/watch?v=YOUR_REGISTER_VIDEO
 YOUTUBE_UNLOCK=https://www.youtube.com/watch?v=YOUR_UNLOCK_VIDEO`}</pre>
             <p className="mt-4">
               修改後請重新啟動 <code className="rounded bg-white px-1">npm run dev</code>。在 Vercel 上修改環境變數後需重新部署。

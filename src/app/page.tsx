@@ -15,7 +15,7 @@ import { getVideos } from "@/lib/videos";
 export const dynamic = "force-dynamic";
 
 export default function Home() {
-  const { home: youtubeId } = getVideos();
+  const { home: homeYoutubeId, register: registerYoutubeId } = getVideos();
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-white/10 bg-white/95 backdrop-blur-md">
@@ -63,7 +63,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mx-auto mt-12 max-w-4xl">
-              <YouTubeEmbed videoId={youtubeId} />
+              <YouTubeEmbed videoId={homeYoutubeId} />
             </div>
           </Container>
         </Section>
@@ -181,7 +181,7 @@ export default function Home() {
               ))}
             </div>
             <div className="mt-14 flex justify-center">
-              <CtaButton href="#register">立即報名觀看 15 分鐘免費教學</CtaButton>
+              <CtaButton href="#register">立即報名觀看 10 分鐘免費教學</CtaButton>
             </div>
           </Container>
         </Section>
@@ -191,7 +191,7 @@ export default function Home() {
           <Container>
             <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
               <div>
-                <SectionHeading>立即報名觀看 15 分鐘免費教學</SectionHeading>
+                <SectionHeading>立即報名觀看 10 分鐘免費教學</SectionHeading>
                 <p className="mt-4 text-lg text-neutral-600">
                   請輸入你的名字，我們會透過 WhatsApp 為你發送教學。
                 </p>
@@ -211,7 +211,7 @@ export default function Home() {
                     從建立正確基礎開始！
                   </p>
                 </div>
-                <YouTubeEmbed videoId={youtubeId} />
+                <YouTubeEmbed videoId={registerYoutubeId} />
               </div>
             </div>
           </Container>
