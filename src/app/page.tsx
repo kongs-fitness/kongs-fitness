@@ -51,7 +51,9 @@ export default function Home() {
                 可能是你還未建立「屬於自己的健身模式」。
               </p>
               <h1 className="mt-8 font-heading text-3xl font-bold leading-tight text-white md:text-5xl">
-                15 分鐘幫你建立一個正確的健身訓練系統
+                10 分鐘幫你建立一個
+                <br />
+                正確的健身訓練系統
               </h1>
               <p className="mt-4 text-xl text-neutral-200 md:text-2xl">
                 助你從「不知道怎麼開始」到開始看到變化
