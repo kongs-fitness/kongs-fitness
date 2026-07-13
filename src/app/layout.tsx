@@ -18,9 +18,6 @@ export const metadata: Metadata = {
   title: "Kong's Fitness | 系統化健身訓練",
   description:
     "10 分鐘幫你建立一個正確的健身訓練系統，助你從不知道怎麼開始到開始看到變化。",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
