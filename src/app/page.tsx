@@ -198,9 +198,7 @@ export default function Home() {
                 <div className="mt-8">
                   <RegisterForm />
                 </div>
-              </div>
-              <div className="space-y-6">
-                <div className="rounded-2xl bg-brand-purple/5 p-8 text-center">
+                <div className="mt-8 rounded-2xl bg-brand-purple/5 p-8 text-center">
                   <p className="font-heading text-xl font-bold text-brand-purple">
                     如果你希望真正改善體態，
                   </p>
@@ -211,6 +209,8 @@ export default function Home() {
                     從建立正確基礎開始！
                   </p>
                 </div>
+              </div>
+              <div>
                 <YouTubeEmbed videoId={registerYoutubeId} variant="vertical" />
               </div>
             </div>
