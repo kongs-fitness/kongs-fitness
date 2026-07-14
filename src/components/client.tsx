@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { whatsappBusinessNumber } from "@/data/content";
 import { CtaButton } from "./ui";
 
@@ -77,6 +77,85 @@ export function FaqAccordion({
   );
 }
 
+type YTPlayer = {
+  pauseVideo: () => void;
+  destroy: () => void;
+};
+
+type YTNamespace = {
+  Player: new (
+    elementId: string,
+    options: {
+      videoId: string;
+      width?: string | number;
+      height?: string | number;
+      playerVars?: Record<string, string | number>;
+      events?: {
+        onStateChange?: (event: { data: number; target: YTPlayer }) => void;
+        onReady?: (event: { target: YTPlayer }) => void;
+      };
+    },
+  ) => YTPlayer;
+  PlayerState: { PLAYING: number };
+};
+
+declare global {
+  interface Window {
+    YT?: YTNamespace;
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+const youtubePlayers = new Map<string, YTPlayer>();
+let youtubeApiPromise: Promise<void> | null = null;
+
+function loadYouTubeApi() {
+  if (typeof window === "undefined") return Promise.resolve();
+  if (window.YT?.Player) return Promise.resolve();
+
+  if (!youtubeApiPromise) {
+    youtubeApiPromise = new Promise((resolve) => {
+      const done = () => {
+        if (window.YT?.Player) resolve();
+      };
+
+      const previous = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        previous?.();
+        done();
+      };
+
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        const script = document.createElement("script");
+        script.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(script);
+      }
+
+      // API may already be mid-load; poll briefly until ready
+      const interval = window.setInterval(() => {
+        if (window.YT?.Player) {
+          window.clearInterval(interval);
+          done();
+        }
+      }, 50);
+    });
+  }
+
+  return youtubeApiPromise;
+}
+
+function pauseOtherPlayers(activeId: string) {
+  youtubePlayers.forEach((player, id) => {
+    if (id !== activeId) {
+      try {
+        player.pauseVideo();
+      } catch {
+        // player may already be destroyed
+      }
+    }
+  });
+}
+
 export function YouTubeEmbed({
   videoId,
   variant = "horizontal",
@@ -85,20 +164,85 @@ export function YouTubeEmbed({
   variant?: "horizontal" | "vertical";
 }) {
   const isVertical = variant === "vertical";
+  const reactId = useId().replace(/:/g, "");
+  const containerId = `yt-${reactId}`;
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<YTPlayer | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    loadYouTubeApi().then(() => {
+      if (cancelled || !window.YT?.Player) return;
+
+      const player = new window.YT.Player(containerId, {
+        videoId,
+        width: "100%",
+        height: "100%",
+        playerVars: {
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          enablejsapi: 1,
+        },
+        events: {
+          onReady: (event) => {
+            playerRef.current = event.target;
+            youtubePlayers.set(containerId, event.target);
+          },
+          onStateChange: (event) => {
+            if (event.data === window.YT?.PlayerState.PLAYING) {
+              pauseOtherPlayers(containerId);
+            }
+          },
+        },
+      });
+
+      playerRef.current = player;
+      youtubePlayers.set(containerId, player);
+    });
+
+    return () => {
+      cancelled = true;
+      youtubePlayers.delete(containerId);
+      try {
+        playerRef.current?.destroy();
+      } catch {
+        // ignore
+      }
+      playerRef.current = null;
+    };
+  }, [containerId, videoId]);
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          try {
+            playerRef.current?.pauseVideo();
+          } catch {
+            // ignore
+          }
+        }
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(wrapper);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div
+      ref={wrapperRef}
       className={`relative overflow-hidden rounded-2xl bg-black shadow-2xl ${
         isVertical ? "mx-auto aspect-[9/16] w-full max-w-sm" : "aspect-video"
       }`}
     >
-      <iframe
-        src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
-        title="Kong's Fitness 免費教學影片"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        className="absolute inset-0 h-full w-full border-0"
-      />
+      <div id={containerId} className="absolute inset-0 h-full w-full [&>iframe]:h-full [&>iframe]:w-full" />
     </div>
   );
 }

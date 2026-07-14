@@ -2,7 +2,7 @@ export const unlockVideoContent = {
   banner: "⬇ 報名成功，點擊下方影片即可開始觀看教學 ⬇",
   intro: {
     line1: "渴望在健身路上更上一層樓的你們",
-    line2: "我們希望用......",
+    line2: "我們希望用K.O.N.G 理念......",
     title: "10 分鐘幫你建立一個正確的健身訓練系統",
     subtitle: "助你從「不知道怎麼開始」到開始看到變化",
   },
